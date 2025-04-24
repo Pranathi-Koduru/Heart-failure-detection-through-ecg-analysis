@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Heart Failure Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffe6f0; /* Light Pink */
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .card {
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            display: inline-block;
+        }
+        .btn-custom {
+            width: 250px;
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Images Side by Side -->
+    <div class="image-container">
+        <img src="{{ url_for('static', filename='images/heart1.png') }}" alt="Heart Image">
+        <img src="{{ url_for('static', filename='images/heart2.png') }}" alt="ECG Image">
+    </div>
+
+    <div class="card">
+        <h1 class="mb-4 text-primary">Heart Failure Detection</h1>
+        <p>Choose an option to proceed:</p>
+        <a href="{{ url_for('predict_image') }}" class="btn btn-primary btn-custom">ECG Image Analysis</a>
+        <a href="{{ url_for('predict_symptoms') }}" class="btn btn-success btn-custom">Symptoms Analysis</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

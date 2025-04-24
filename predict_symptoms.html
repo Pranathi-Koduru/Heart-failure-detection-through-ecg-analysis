@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Heart Disease Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+        .card {
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn-custom {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .alert {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2 class="text-center mb-4">Heart Disease Prediction</h2>
+        
+        <form action="{{ url_for('predict_symptoms_result') }}" method="post">
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" name="age" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Gender</label>
+                <select name="gender" class="form-control" required>
+                    <option value="" selected disabled>-- Select Gender --</option>
+                    <option value="1">Female</option>
+                    <option value="2">Male</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Height (cm)</label>
+                <input type="number" name="height" id="height" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Weight (kg)</label>
+                <input type="number" name="weight" id="weight" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Systolic BP (ap_hi)</label>
+                <input type="number" name="ap_hi" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Diastolic BP (ap_lo)</label>
+                <input type="number" name="ap_lo" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Cholesterol Level</label>
+                <select name="cholesterol" id="cholesterol" class="form-control" required>
+                    <option value="" disabled selected>-- Select Cholesterol Level --</option>
+                    <option value="1">Normal</option>
+                    <option value="2">Above Normal</option>
+                    <option value="3">Well Above Normal</option>
+                </select>
+                <small class="form-text text-muted">
+                    * This is auto-filled based on your BMI. You can change it if you know your actual level.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label>Glucose Level</label>
+                <select name="gluc" class="form-control" required>
+                    <option value="" selected disabled>-- Select Glucose Level --</option>
+                    <option value="1">Normal</option>
+                    <option value="2">Above Normal</option>
+                    <option value="3">Well Above Normal</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Smoker</label>
+                <select name="smoke" class="form-control" required>
+                    <option value="" selected disabled>-- Select Smoking Status --</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Alcohol Intake</label>
+                <select name="alco" class="form-control" required>
+                    <option value="" selected disabled>-- Select Alcohol Intake --</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Physical Activity</label>
+                <select name="active" class="form-control" required>
+                    <option value="" selected disabled>-- Select Physical Activity --</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-custom mt-3">Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result-box {% if 'No chance of having Heart Disease' in prediction %}bg-success text-white{% else %}bg-danger text-white{% endif %}">
+            <strong>Prediction:</strong> {{ prediction }}
+        </div>
+
+        {% if 'Chance of having Heart Disease' in prediction %}
+        <div class="alert alert-warning">
+            <h5>💡 Health Tips for a Healthy Heart:</h5>
+            <ul>
+                <li>🥗 Follow a <strong>heart-healthy diet</strong> (low in saturated fats, high in fiber).</li>
+                <li>🏃 Exercise <strong>at least 30 minutes a day</strong> (brisk walking, yoga, etc.).</li>
+                <li>🚭 Quit smoking and <strong>limit alcohol intake</strong>.</li>
+                <li>🧘 Manage stress with <strong>meditation or relaxation techniques</strong>.</li>
+                <li>🩺 Monitor blood pressure and <strong>maintain healthy cholesterol levels</strong>.</li>
+                <li>🏥 Get regular <strong>health check-ups</strong> and consult a doctor.</li>
+            </ul>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        <a href="/" class="btn btn-secondary btn-custom mt-3">Back to Home</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const heightInput = document.getElementById('height');
+        const weightInput = document.getElementById('weight');
+        const cholesterolSelect = document.getElementById('cholesterol');
+
+        function updateCholesterolBasedOnBMI() {
+            const height = parseFloat(heightInput.value);
+            const weight = parseFloat(weightInput.value);
+
+            if (!isNaN(height) && !isNaN(weight) && height > 0 && weight > 0) {
+                const heightInMeters = height / 100;
+                const bmi = weight / (heightInMeters * heightInMeters);
+
+                if (bmi < 25) {
+                    cholesterolSelect.selectedIndex = 1; // Normal
+                } else if (bmi >= 25 && bmi < 30) {
+                    cholesterolSelect.selectedIndex = 2; // Above Normal
+                } else {
+                    cholesterolSelect.selectedIndex = 3; // Well Above Normal
+                }
+            }
+        }
+
+        heightInput.addEventListener('input', updateCholesterolBasedOnBMI);
+        weightInput.addEventListener('input', updateCholesterolBasedOnBMI);
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

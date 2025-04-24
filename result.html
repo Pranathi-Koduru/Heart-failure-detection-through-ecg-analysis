@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Heart Disease Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+            width: 50%;
+            margin: auto;
+        }
+        button {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Heart Disease Prediction</h1>
+
+        {% if image %}
+            <p><strong>ECG Analysis Result:</strong> {{ result }}</p>
+            {% if confidence is not none %}
+                <p><strong>Confidence:</strong> {{ confidence | round(2) }}%</p>
+            {% endif %}
+
+            <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="ECG Image" width="300">
+
+            <br><br>
+            <a href="{{ url_for('download_report', image=image, result=result) }}">
+                <button>Download Report (PDF)</button>
+            </a>
+        {% else %}
+            <p><strong>Symptom-Based Prediction:</strong> {{ result }}</p>
+        {% endif %}
+
+        <br><br>
+        <a href="/">Try Again</a>
+    </div>
+</body>
+</html>
