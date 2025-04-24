@@ -24,9 +24,18 @@ It provides a user-friendly interface to either upload an ECG image or input sym
 
 ## 🚀 How to Run the Project
 
-### 1. 📦 Install Dependencies
+ step 1: 📦 Install Dependencies
 
 Make sure Python is installed (preferably 3.8+), then run:
 
 ```bash
 pip install -r requirements.txt
+
+step 2: python preprocess.py
+
+step 3: python train.py
+
+step 4: python model.py
+
+step 5: python app.py
+
