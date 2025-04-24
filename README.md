@@ -4,7 +4,7 @@ https://www.kaggle.com/datasets/ankurray00/ecg-dataset
 Cardiovascular disease dataset
 https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset
 
-# 💓 Heart Failure Detection Web App
+# 💓 Heart Failure Detection Web Application
 
 This is a web-based application for predicting the risk of heart failure using:
 - 📷 **ECG Image Classification**
