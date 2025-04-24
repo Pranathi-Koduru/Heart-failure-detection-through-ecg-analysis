@@ -22,10 +22,7 @@ It provides a user-friendly interface to either upload an ECG image or input sym
 
 ---
 
-## 🚀 How to Run the Project
 
- 
-pip install -r requirements.txt
 ## 🚀 How to Run the Project
 
 ### step 1: 📦 Install Dependencies  
