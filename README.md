@@ -24,18 +24,34 @@ It provides a user-friendly interface to either upload an ECG image or input sym
 
 ## 🚀 How to Run the Project
 
- step 1: 📦 Install Dependencies
+ 
+pip install -r requirements.txt
+## 🚀 How to Run the Project
 
+### step 1: 📦 Install Dependencies  
 Make sure Python is installed (preferably 3.8+), then run:
 
-```bash
-pip install -r requirements.txt
+- `pip install -r requirements.txt`
 
-step 2: python preprocess.py
+### step 2: 🧹 Preprocess the Dataset  
+Prepares the dataset for training.
 
-step 3: python train.py
+- `python preprocess.py`
 
-step 4: python model.py
+### step 3: 🧠 Train the ECG Image Model  
+Trains the CNN model for ECG image classification.
 
-step 5: python app.py
+- `python train.py`
+
+### step 4: 🩺 Train the Symptom-Based Model  
+Trains the SVM model for symptom-based prediction.
+
+- `python model.py`
+
+### step 5: ▶️ Launch the Web Application  
+Starts the Flask web app. Open your browser and go to `http://localhost:5000`.
+
+- `python app.py`
+
+
 
